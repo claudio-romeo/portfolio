@@ -1,4 +1,7 @@
+<?php $auth = 0 ?>
+
 <?php include 'lib/include.php'; ?>
+
 <?php include 'partial/header.php'; ?>
 
 
@@ -6,13 +9,6 @@
 <h1>Mon Portfolio</h1>
 
 
-<?php
-
-$select= $db->query("SELECT * FROM users");
-var_dump($select->fetch());
-
-
-?>
 
 
 

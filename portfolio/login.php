@@ -1,24 +1,29 @@
-<?php $auth = 0; ?>
-<?php include 'lib/include.php'; ?>
-<?php include 'partial/header.php'; ?>
-
-<?php 
-if(isset($_POST['username']) && isset($_POST['password']))
-{ 
-    $username = $db->quote($_POST['username']);
-    $password = sha1($_POST['password']);
-
-    $select = $db->query("SELECT * FROM users WHERE username=$username && password='$password'");
-    
-    
-    
-    if($select->rowCount() > 0 )
-    {
-        $_SESSION['auth'] = $select->fetchAll();
+<?php $auth = 0; 
+ include 'lib/include.php'; 
+ 
+ // TRAITEMENT DU FORMULAIRE 
+ 
+ if(isset($_POST['username']) && isset($_POST['password']))
+ { 
+     $username = $db->quote($_POST['username']);
+     $password = sha1($_POST['password']);
+     
+     $select = $db->query("SELECT * FROM users WHERE username=$username && password='$password'");
+     
+     
+     
+     if($select->rowCount() > 0 )
+     {
+         $_SESSION['auth'] = $select->fetch();
+         setFlash('vous êtes maintenant connecté');
+         header('location:' . WEBROOT . 'admin/index.php');
+         die();
+        }
+        
+        
     }
-    
-    
-}
+    // INCLUSION DU HEADER 
+    include 'partial/header.php'; 
 ?>
 
 <form action="" method="POST">
@@ -36,4 +41,5 @@ if(isset($_POST['username']) && isset($_POST['password']))
 
 </form>
 
+<?php include 'lib/debug.php'; ?>
 <?php include 'partial/footer.php'; ?>
